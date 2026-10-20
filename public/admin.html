@@ -1,0 +1,609 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BrightPath Academy | Admin</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/admin.js" defer></script>
+  <style>
+    .admin-container { max-width: 1100px; margin: 50px auto; padding: 20px; }
+    .admin-panel { background: white; padding: 24px; border-radius: 12px; box-shadow: 0 4px 20px #0001; }
+    .admin-panel input { display: block; width: 100%; padding: 12px; margin: 8px 0 16px; box-sizing: border-box; }
+    .admin-table-wrap { overflow-x: auto; margin-top: 20px; }
+    .admin-table { width: 100%; border-collapse: collapse; }
+    .admin-table th, .admin-table td { padding: 12px; border-bottom: 1px solid #ddd; text-align: left; }
+    .admin-table th { background: #f3f6fb; }
+    .admin-message { margin-top: 14px; }
+
+    .admin-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.admin-filters input,
+.admin-filters select {
+  flex: 1;
+  min-width: 220px;
+  padding: 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font: inherit;
+  box-sizing: border-box;
+}
+
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 16px;
+  margin: 24px 0;
+}
+
+.stat-card {
+  padding: 20px;
+  border-radius: 12px;
+  background: #f3f6fb;
+  border: 1px solid #e1e7f0;
+}
+
+.stat-card h3 {
+  margin: 0 0 12px;
+  font-size: 15px;
+  color: #475569;
+}
+
+.stat-card p {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 700;
+  color: #2544b6;
+}
+
+/* BrightPath Academy - Admin Dashboard UI */
+
+:root {
+  --bp-primary: #3659df;
+  --bp-primary-dark: #2645c5;
+  --bp-bg: #f4f7fc;
+  --bp-card: #ffffff;
+  --bp-text: #17243b;
+  --bp-muted: #64748b;
+  --bp-border: #e2e8f0;
+}
+
+body {
+  background: var(--bp-bg);
+  color: var(--bp-text);
+  font-family: Inter, "Segoe UI", Arial, sans-serif;
+  line-height: 1.6;
+}
+
+.admin-panel,
+.dashboard-section {
+  box-sizing: border-box;
+  width: min(1200px, calc(100% - 32px));
+  margin: 24px auto;
+  padding: 28px;
+  background: var(--bp-card);
+  border: 1px solid var(--bp-border);
+  border-radius: 18px;
+  box-shadow: 0 8px 30px rgba(30, 50, 90, 0.06);
+}
+
+.admin-panel h1,
+.admin-panel h2,
+.dashboard-section h1,
+.dashboard-section h2,
+.dashboard-section h3 {
+  color: var(--bp-text);
+  line-height: 1.3;
+  margin-top: 0;
+}
+
+.admin-panel h2,
+.dashboard-section h2 {
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+
+.admin-panel p,
+.dashboard-section p {
+  color: var(--bp-muted);
+}
+
+.admin-panel form,
+.dashboard-section form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin: 20px 0;
+}
+
+.admin-panel form label,
+.dashboard-section form label {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 0;
+  font-weight: 600;
+  color: var(--bp-text);
+}
+
+.admin-panel input,
+.admin-panel select,
+.admin-panel textarea,
+.dashboard-section input,
+.dashboard-section select,
+.dashboard-section textarea {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  padding: 12px 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 9px;
+  background: #fff;
+  color: var(--bp-text);
+  font: inherit;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.admin-panel input:focus,
+.admin-panel select:focus,
+.admin-panel textarea:focus,
+.dashboard-section input:focus,
+.dashboard-section select:focus,
+.dashboard-section textarea:focus {
+  outline: none;
+  border-color: var(--bp-primary);
+  box-shadow: 0 0 0 3px rgba(54, 89, 223, 0.13);
+}
+
+.admin-panel button,
+.dashboard-section button {
+  width: fit-content;
+  max-width: 100%;
+  padding: 12px 20px;
+  border: 1px solid var(--bp-primary);
+  border-radius: 10px;
+  background: var(--bp-primary);
+  color: white;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.admin-panel button:hover,
+.dashboard-section button:hover {
+  background: var(--bp-primary-dark);
+  transform: translateY(-1px);
+}
+
+.admin-panel table,
+.dashboard-section table {
+  width: 100%;
+  margin: 16px 0;
+  border-collapse: collapse;
+  white-space: nowrap;
+}
+
+.admin-panel th,
+.admin-panel td,
+.dashboard-section th,
+.dashboard-section td {
+  padding: 14px 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--bp-border);
+}
+
+.admin-panel th,
+.dashboard-section th {
+  background: #f1f5ff;
+  color: #263b68;
+  font-weight: 700;
+}
+
+.admin-panel tbody tr:hover,
+.dashboard-section tbody tr:hover {
+  background: #f8faff;
+}
+
+#studentsPanel,
+#feeManagementSection {
+  overflow-wrap: anywhere;
+}
+
+#studentsPanel > *,
+#feeManagementSection > * {
+  max-width: 100%;
+}
+
+#feeManagementSection form button {
+  align-self: end;
+}
+
+@media (max-width: 700px) {
+  .admin-panel,
+  .dashboard-section {
+    width: calc(100% - 20px);
+    margin: 12px auto;
+    padding: 18px;
+    border-radius: 14px;
+  }
+
+  .admin-panel form,
+  .dashboard-section form {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-panel table,
+  .dashboard-section table {
+    display: block;
+    overflow-x: auto;
+  }
+
+  .admin-panel button,
+  .dashboard-section button {
+    width: 100%;
+  }
+}
+
+  </style>
+</head>
+<body>
+  <main class="admin-container">
+    <section class="admin-panel" id="loginPanel">
+      <h1>Admin Login</h1>
+      <p>Sign in to manage BrightPath Academy enquiries.</p>
+
+      <form id="loginForm">
+        <label for="username">Username</label>
+        <input id="username" name="username" autocomplete="username" required>
+
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password"
+               autocomplete="current-password" required>
+
+        <button class="btn btn-primary" type="submit">Sign In</button>
+      </form>
+
+      <p id="loginMessage" class="admin-message" role="status"></p>
+    </section>
+
+    <section class="admin-panel" id="dashboardPanel" hidden>
+      <h1>Admission Dashboard</h1>
+      
+<div class="stats-grid">
+  <div class="stat-card">
+    <h3>Total Enquiries</h3>
+    <p id="totalCount">0</p>
+  </div>
+
+  <div class="stat-card">
+    <h3>New</h3>
+    <p id="newCount">0</p>
+  </div>
+
+  <div class="stat-card">
+    <h3>Contacted</h3>
+    <p id="contactedCount">0</p>
+  </div>
+
+  <div class="stat-card">
+    <h3>Enrolled</h3>
+    <p id="enrolledCount">0</p>
+  </div>
+</div>
+
+      <p>Signed in as <strong id="adminUsername"></strong></p>
+
+      <button class="btn btn-secondary" id="refreshButton" type="button">
+        Refresh Enquiries
+      </button>
+      <button class="btn btn-primary" id="logoutButton" type="button">
+        Log Out
+      </button>
+      <div class="admin-filters">
+  <input
+    id="searchInput"
+    type="search"
+    placeholder="Search by student name or phone..."
+    aria-label="Search admissions"
+  >
+
+  <select id="courseFilter" aria-label="Filter by course">
+    <option value="">All Courses</option>
+    <option value="School Foundation">School Foundation</option>
+    <option value="Exam Preparation">Exam Preparation</option>
+    <option value="Online Courses">Online Courses</option>
+  </select>
+</div>
+
+      <p id="dashboardMessage" class="admin-message" role="status"></p>
+
+      <div class="admin-table-wrap">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Student</th>
+              <th>Phone</th>
+              <th>Course</th>
+              <th>Mode</th>
+              <th>Status</th>
+              <th>Submitted</th>
+            </tr>
+          </thead>
+          <tbody id="admissionsBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    
+<section class="admin-panel" id="studentsPanel" hidden style="margin-top: 24px;">
+  <h2>Student Management</h2>
+  <p>Register enrolled students and view your student records.</p>
+
+  <form id="studentForm">
+    <label for="studentName">Student Name</label>
+    <input
+      id="studentName"
+      name="studentName"
+      type="text"
+      minlength="2"
+      maxlength="100"
+      autocomplete="name"
+      required
+    >
+
+    <label for="studentPhone">Phone Number</label>
+    <input
+      id="studentPhone"
+      name="phone"
+      type="tel"
+      inputmode="numeric"
+      pattern="[6-9][0-9]{9}"
+      maxlength="10"
+      placeholder="10-digit mobile number"
+      required
+    >
+
+    <label for="studentCourse">Course</label>
+    <select id="studentCourse" name="course" required>
+      <option value="">Choose a course</option>
+      <option value="School Foundation">School Foundation</option>
+      <option value="Exam Preparation">Exam Preparation</option>
+      <option value="Online Courses">Online Courses</option>
+    </select>
+
+    <label for="studentMode">Learning Mode</label>
+    <select id="studentMode" name="mode" required>
+      <option value="">Choose a mode</option>
+      <option value="Offline">Offline</option>
+      <option value="Online">Online</option>
+      <option value="Hybrid">Hybrid</option>
+    </select>
+
+    
+<label for="studentPassword">Initial Student Password</label>
+<input
+  id="studentPassword"
+  name="password"
+  type="password"
+  minlength="12"
+  maxlength="128"
+  autocomplete="new-password"
+  placeholder="At least 12 characters"
+  required
+>
+<p>Give this initial password securely to the student.</p>
+
+    <label for="admissionId">Admission ID (optional)</label>
+    <input
+      id="admissionId"
+      name="admissionId"
+      type="number"
+      min="1"
+      placeholder="Link an existing admission enquiry"
+    >
+
+    <button class="btn btn-primary" type="submit">
+      Register Student
+    </button>
+  </form>
+
+  <p id="studentMessage" role="status" aria-live="polite"></p>
+
+  <div style="overflow-x: auto;">
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Admission ID</th>
+          <th>Student Name</th>
+          <th>Phone</th>
+          <th>Course</th>
+          <th>Mode</th>
+          <th>Registered</th>
+        </tr>
+      </thead>
+      <tbody id="studentsBody"></tbody>
+    </table>
+  </div>
+
+  <button
+    class="btn btn-secondary"
+    id="refreshStudentsButton"
+    type="button"
+    style="margin-top: 16px;"
+  >
+
+    Refresh Students
+  </button>
+</section>
+
+
+<section class="dashboard-section" id="feeManagementSection" hidden >
+  <h2>Student Fee Management</h2>
+  <p>Assign course fees and record payments.</p>
+
+  <form id="studentFeeForm">
+    <label for="feeStudentId">Student ID</label>
+    <input
+      type="number"
+      id="feeStudentId"
+      name="studentId"
+      min="1"
+      step="1"
+      required
+    >
+
+    <label for="totalFee">Total Course Fee (₹)</label>
+    <input
+      type="number"
+      id="totalFee"
+      name="totalFee"
+      min="0.01"
+      step="0.01"
+      required
+    >
+
+    <label for="amountPaid">Amount Paid (₹)</label>
+    <input
+      type="number"
+      id="amountPaid"
+      name="amountPaid"
+      min="0"
+      step="0.01"
+      value="0"
+      required
+    >
+
+    <label for="feeDueDate">Due Date (optional)</label>
+    <input
+      type="date"
+      id="feeDueDate"
+      name="dueDate"
+    >
+
+    <label for="feeNotes">Notes (optional)</label>
+    <input
+      type="text"
+      id="feeNotes"
+      name="notes"
+      maxlength="255"
+    >
+
+    <button type="submit">Save Fee Record</button>
+    <p id="feeMessage" role="status" aria-live="polite"></p>
+  </form>
+
+  <h3>Fee Records</h3>
+  <button type="button" id="refreshFeesButton">
+    Refresh Fee Records
+  </button>
+
+  <div style="overflow-x:auto">
+    <table>
+      <thead>
+        <tr>
+          <th>Student</th>
+          <th>Course</th>
+          <th>Total Fee</th>
+          <th>Paid</th>
+          <th>Balance Due</th>
+          <th>Due Date</th>
+        </tr>
+      </thead>
+      <tbody id="feeRecordsBody">
+        <tr>
+          <td colspan="6">Fee records will appear here.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="dashboard-section" id="classesPanel" hidden>
+  <h2>Class Management</h2>
+  <p>Add live or recorded classes for your students.</p>
+
+  <form id="classForm">
+    <div class="form-grid">
+      <div>
+        <label for="classCourse">Course</label>
+        <input
+          id="classCourse"
+          name="course"
+          type="text"
+          placeholder="e.g. Class 10 Maths"
+          required
+        >
+      </div>
+
+      <div>
+        <label for="classTitle">Class Title</label>
+        <input
+          id="classTitle"
+          name="classTitle"
+          type="text"
+          placeholder="e.g. Algebra - Chapter 1"
+          required
+        >
+      </div>
+
+      <div>
+        <label for="classType">Class Type</label>
+        <select id="classType" name="classType" required>
+          <option value="Recorded">Recorded</option>
+          <option value="Live">Live</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="scheduledAt">Scheduled Date & Time</label>
+        <input
+          id="scheduledAt"
+          name="scheduledAt"
+          type="datetime-local"
+        >
+      </div>
+
+      <div>
+        <label for="classLink">Class Link</label>
+        <input
+          id="classLink"
+          name="classLink"
+          type="url"
+          placeholder="https://..."
+        >
+      </div>
+
+      <div>
+        <label for="classDescription">Description</label>
+        <textarea
+          id="classDescription"
+          name="description"
+          rows="3"
+          placeholder="Enter class details"
+        ></textarea>
+      </div>
+    </div>
+
+    <button type="submit">Add Class</button>
+    <p id="classMessage" role="status" aria-live="polite"></p>
+  </form>
+
+  <h3>Added Classes</h3>
+  <div id="classesList">
+    Classes will appear here.
+  </div>
+</section>
+
+  </main>
+</body>
+</html>

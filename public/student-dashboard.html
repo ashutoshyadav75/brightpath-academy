@@ -1,0 +1,189 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Dashboard | BrightPath Academy</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f1f5f9;
+      color: #1e293b;
+    }
+
+    header {
+      background: #173b7a;
+      color: white;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    header h1 { margin: 0; font-size: 22px; }
+
+    button {
+      border: 0;
+      border-radius: 8px;
+      padding: 10px 16px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    #logoutButton {
+      background: white;
+      color: #173b7a;
+    }
+
+    main {
+      max-width: 1000px;
+      margin: 30px auto;
+      padding: 0 18px;
+    }
+
+    .card {
+      background: white;
+      padding: 24px;
+      margin-bottom: 20px;
+      border-radius: 12px;
+      box-shadow: 0 3px 12px #0f172a0b;
+    }
+
+    .profile-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+
+    .field-label {
+      color: #64748b;
+      font-size: 14px;
+      margin-bottom: 6px;
+    }
+
+    .field-value {
+      font-weight: bold;
+      overflow-wrap: anywhere;
+    }
+
+    #statusMessage { color: #b91c1c; }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+    }
+
+    .feature {
+      padding: 18px;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+    }
+
+    .feature h3 { margin-top: 0; color: #173b7a; }
+    .coming-soon { color: #64748b; font-size: 13px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>BrightPath Academy</h1>
+    <button id="logoutButton" type="button">Log Out</button>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2 id="welcomeHeading">Welcome, Student!</h2>
+      <p id="statusMessage" role="status" aria-live="polite">
+        Loading your profile...
+      </p>
+
+      <div class="profile-grid">
+        <div>
+          <div class="field-label">Student ID</div>
+          <div class="field-value" id="studentId">—</div>
+        </div>
+        <div>
+          <div class="field-label">Full Name</div>
+          <div class="field-value" id="studentName">—</div>
+        </div>
+        <div>
+          <div class="field-label">Phone</div>
+          <div class="field-value" id="studentPhone">—</div>
+        </div>
+        <div>
+          <div class="field-label">Course</div>
+          <div class="field-value" id="studentCourse">—</div>
+        </div>
+        <div>
+          <div class="field-label">Learning Mode</div>
+          <div class="field-value" id="learningMode">—</div>
+        </div>
+        <div>
+          <div class="field-label">Registration Date</div>
+          <div class="field-value" id="registrationDate">—</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Your Learning</h2>
+      <div class="feature-grid">
+        <article class="feature">
+          <h3>My Classes</h3>
+          <p>Access your learning sessions.</p>
+          <span class="coming-soon">Coming soon</span>
+        </article>
+        <article class="feature">
+          <h3>Test Series</h3>
+          <p>Practice tests and review results.</p>
+          <span class="coming-soon">Coming soon</span>
+        </article>
+        <article class="feature">
+          <h3>Fee Details</h3>
+          <p>View your fee information.</p>
+
+          
+<article class="feature" id="feeFeature">
+  <h3>Fee Details</h3>
+  <p>View your course fee and payment balance.</p>
+
+  <div class="profile-grid">
+    <div>
+      <div class="field-label">Total Course Fee</div>
+      <div class="field-value" id="totalFee">Loading...</div>
+    </div>
+
+    <div>
+      <div class="field-label">Amount Paid</div>
+      <div class="field-value" id="amountPaid">Loading...</div>
+    </div>
+
+    <div>
+      <div class="field-label">Remaining Balance</div>
+      <div class="field-value" id="remainingBalance">Loading...</div>
+    </div>
+
+    <div>
+      <div class="field-label">Due Date</div>
+      <div class="field-value" id="feeDueDate">Loading...</div>
+    </div>
+  </div>
+
+  <p id="feeMessage" role="status" aria-live="polite"></p>
+</article>
+
+          
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <script src="/js/student-dashboard.js"></script>
+</body>
+</html>

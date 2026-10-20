@@ -1,0 +1,106 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Login | BrightPath Academy</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      background: #f0f4ff;
+    }
+
+    .login-card {
+      width: 100%;
+      max-width: 400px;
+      padding: 30px;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 8px 30px #152b5018;
+    }
+
+    h1 { color: #173b7a; margin-top: 0; }
+    p { color: #64748b; }
+
+    label {
+      display: block;
+      margin: 16px 0 6px;
+      font-weight: bold;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 22px;
+      padding: 13px;
+      border: 0;
+      border-radius: 8px;
+      background: #2455a4;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:disabled { opacity: 0.6; }
+
+    #message {
+      margin-top: 15px;
+      overflow-wrap: anywhere;
+    }
+
+    a { color: #2455a4; }
+  </style>
+</head>
+<body>
+  <main class="login-card">
+    <h1>BrightPath Academy</h1>
+    <p>Sign in to access your student dashboard.</p>
+
+    <form id="studentLoginForm">
+      <label for="studentId">Student ID</label>
+      <input
+        id="studentId"
+        name="studentId"
+        type="number"
+        min="1"
+        step="1"
+        required
+      >
+
+      <label for="password">Password</label>
+      <input
+        id="password"
+        name="password"
+        type="password"
+        autocomplete="current-password"
+        required
+      >
+
+      <button id="loginButton" type="submit">
+        Log In
+      </button>
+    </form>
+
+    <p id="message" role="status" aria-live="polite"></p>
+    <p><a href="/">Back to Home</a></p>
+  </main>
+
+  <script src="/js/student-login.js"></script>
+</body>
+</html>

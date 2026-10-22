@@ -41,7 +41,7 @@ const sessionStore = new MySQLStore({
   checkExpirationInterval: 15 * 60 * 1000,
   expiration: 24 * 60 * 60 * 1000
 });
-
+app.set("trust proxy", 1);
 app.use(express.json({ limit: "10kb" }));
 app.use(express.static(publicDirectory));
 
